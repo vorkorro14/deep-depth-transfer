@@ -71,6 +71,7 @@ class UnsupervisedDepthModel(pl.LightningModule):
 
     def get_transformations(self, images):
         if self._mono and self._stereo:
+            print('mono and stereo')
             transformations = [
                 self.pose(images[0], images[1]),
                 self.pose(images[1], images[0]),
@@ -78,12 +79,14 @@ class UnsupervisedDepthModel(pl.LightningModule):
                 self.pose(images[3], images[2])
             ]
         elif self._mono:
+            print('mono')
             transformations = [
                 self.pose(images[0], images[1]),
                 self.pose(images[1], images[0])
             ]
         else:
             transformations = None
+        print(transformations)
         return transformations
 
     def loss(self, batch):
